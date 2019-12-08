@@ -3,7 +3,7 @@
 Start Nginx.
 
 ```shell
-docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v ~/github/nginx-strimzi-kafka-bridge/nginx.conf:/etc/nginx/conf.d/default.conf nginx
+docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v ~/github/nginx-strimzi-kafka-bridge/nginx.conf:/etc/nginx/nginx.conf nginx
 ```
 
 ## Basic Authentication
@@ -26,5 +26,5 @@ htpasswd .htpasswd user2
 Start Nginx.
 
 ```shell
-docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v ~/github/nginx-strimzi-kafka-bridge/nginx_basic_auth.conf:/etc/nginx/conf.d/default.conf -v ~/github/nginx-strimzi-kafka-bridge/.htpasswd:/etc/nginx/htpasswd/.htpasswd nginx
+docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v ~/github/nginx-strimzi-kafka-bridge/nginx_basic_auth.conf:/etc/nginx/nginx.conf -v ~/github/nginx-strimzi-kafka-bridge/.htpasswd:/etc/nginx/htpasswd/.htpasswd nginx
 ```
