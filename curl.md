@@ -6,7 +6,7 @@ If HTTP Basic Authentication is enabled on the Nginx proxy, export following `BA
 Use the appropriate user and password.
 
 ```shell
-export BASIC_AUTH="\"Authorization: Basic $(echo -n user1:password1 | base64)\""
+export BASIC_AUTH="Authorization: Basic $(echo -n user1:password1 | base64)"
 ```
 
 # Producer
