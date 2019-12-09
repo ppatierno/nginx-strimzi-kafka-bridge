@@ -1,15 +1,18 @@
 # Introduction
 
-The following curl commands describe examples for interacting with the Strimzi Kafka Bridge through the Nginx proxy.
+The following `curl` commands describe examples for interacting with the Strimzi Kafka Bridge through the Nginx proxy.
 
 If HTTP Basic Authentication is enabled on the Nginx proxy, export following `BASIC_AUTH` for adding the `Authorization` header in the HTTP requests.
 Use the appropriate user and password.
+For example:
 
 ```shell
 export BASIC_AUTH="Authorization: Basic $(echo -n user1:password1 | base64)"
 ```
 
 # Producer
+
+Producer records.
 
 ```shell
 curl -X POST \
@@ -28,7 +31,7 @@ curl -X POST \
 
 # Consumer
 
-Create consumer
+## Create consumer
 
 ```shell
 curl -X POST \
@@ -45,7 +48,7 @@ curl -X POST \
 }'
 ```
 
-Subscribe topic
+## Subscribe topic
 
 ```shell
 curl -X POST \
@@ -55,7 +58,7 @@ curl -X POST \
   -d '{ "topics" : ["test"] }'
 ```
 
-Getting records
+## Getting records
 
 ```shell
 curl -X GET \
@@ -64,7 +67,7 @@ curl -X GET \
   -H "${BASIC_AUTH}"
 ```
 
-Delete consumer
+## Delete consumer
 
 ```shell
 curl -X DELETE \
