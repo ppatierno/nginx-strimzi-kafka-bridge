@@ -32,3 +32,14 @@ Start Nginx mounting a volume for using the provided `nginx_basic_auth.conf` fil
 ```shell
 docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v ~/github/nginx-strimzi-kafka-bridge/nginx_basic_auth.conf:/etc/nginx/nginx.conf -v ~/github/nginx-strimzi-kafka-bridge/.htpasswd:/etc/nginx/htpasswd/.htpasswd nginx
 ```
+
+## Rate Limiting
+
+Start Nginx mounting a volume for using the provided `nginx_rate_limiting` file as the default one.
+
+```shell
+docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v ~/github/nginx-strimzi-kafka-bridge/nginx_rate_limiting.conf:/etc/nginx/nginx.conf nginx
+```
+
+In this configuration, the proxy limits the incoming requests as maximum 1 request/sec.
+If it is exceeded, the proxy return error `503 Service Unavailable`.
