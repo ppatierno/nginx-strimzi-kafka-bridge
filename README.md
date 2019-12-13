@@ -47,3 +47,10 @@ docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v $PW
 
 In this configuration, the proxy limits the incoming requests as maximum 1 request/sec.
 If it is exceeded, the proxy return error `503 Service Unavailable`.
+
+It is possible to have the proxy accepting a `burst` of requests but processing them at fixed rate (defined by the rate limiting).
+When the burst is exceeded, the proxy returns an error.
+
+```shell
+docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v $PWD/limiting/nginx_rate_limiting_burst.conf:/etc/nginx/nginx.conf nginx
+```
