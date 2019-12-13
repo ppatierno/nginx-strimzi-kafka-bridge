@@ -7,10 +7,12 @@ This repository provides some examples for using [Nginx](https://www.nginx.com/)
 Start Nginx mounting a volume for using the provided `nginx.conf` file as the default one.
 
 ```shell
-docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v ~/github/nginx-strimzi-kafka-bridge/nginx.conf:/etc/nginx/nginx.conf nginx
+docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v $PWD/basic/nginx.conf:/etc/nginx/nginx.conf nginx
 ```
 
-## Basic Authentication
+## Authentication
+
+### Basic Authentication
 
 Use `htpasswd` to create a password file containing related users.
 First time create the file from scratch using `-c` flag and type the password.
@@ -30,15 +32,17 @@ htpasswd .htpasswd user2
 Start Nginx mounting a volume for using the provided `nginx_basic_auth.conf` file as the default one and the `.htpasswd` file as users and passwords file.
 
 ```shell
-docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v ~/github/nginx-strimzi-kafka-bridge/nginx_basic_auth.conf:/etc/nginx/nginx.conf -v ~/github/nginx-strimzi-kafka-bridge/.htpasswd:/etc/nginx/htpasswd/.htpasswd nginx
+docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v $PWD/authentication/nginx_basic_auth.conf:/etc/nginx/nginx.conf -v $PWD/authentication/.htpasswd:/etc/nginx/htpasswd/.htpasswd nginx
 ```
 
-## Rate Limiting
+## Limiting
+
+### Rate Limiting
 
 Start Nginx mounting a volume for using the provided `nginx_rate_limiting` file as the default one.
 
 ```shell
-docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v ~/github/nginx-strimzi-kafka-bridge/nginx_rate_limiting.conf:/etc/nginx/nginx.conf nginx
+docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v $PWD/limiting/nginx_rate_limiting.conf:/etc/nginx/nginx.conf nginx
 ```
 
 In this configuration, the proxy limits the incoming requests as maximum 1 request/sec.
