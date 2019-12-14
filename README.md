@@ -54,3 +54,13 @@ When the burst is exceeded, the proxy returns an error.
 ```shell
 docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v $PWD/limiting/nginx_rate_limiting_burst.conf:/etc/nginx/nginx.conf nginx
 ```
+
+## Encryption
+
+Start Nginx mounting a volume for using the provided `nginx_encryption` file as the default one.
+
+```shell
+docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 8443:8443 -v $PWD/encryption/nginx_encryption.conf:/etc/nginx/nginx.conf -v $PWD/encryption/nginx.pem:/etc/nginx/certs/nginx.pem -v $PWD/encryption/nginx.key:/etc/nginx/certs/nginx.key nginx
+```
+
+> The provided CA certificate has `ca` as CN and the Nginx certificate has `localhost` so that running a test locally like `curl --cacert ca.pem -v https://localhost:8443/healthy` just works with hostname verification as well.
