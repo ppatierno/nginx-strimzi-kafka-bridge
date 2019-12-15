@@ -8,7 +8,7 @@ Nginx writes information about encountered issues of different severity levels t
 
 Nginx writes information about client requests to the `access.log` file right after the request is processed; by default it's defined a simlink to `/dev/stdout`.
 
-You can customize it using all the provided Nginx variables.
+You can customize it using all the provided Nginx variables, for example logging any request header using `$http_<header>` and response header via `$sent_http_<header>`.
 
 Start Nginx mounting a volume for using the provided `nginx_logging.conf` file as the default one.
 
