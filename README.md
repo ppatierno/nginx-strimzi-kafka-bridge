@@ -4,11 +4,24 @@ This repository provides some examples for using [Nginx](https://www.nginx.com/)
 
 ## Logging
 
-Nginx writes information about encountered issues of different severity levels to the `error.log` file which by default it defined as a simlink to `/dev/stderr`.
+Nginx writes information about encountered issues of different severity levels to the `error.log` file.
+Nginx writes information about client requests to the `access.log` file right after the request is processed.
 
-Nginx writes information about client requests to the `access.log` file right after the request is processed; by default it's defined a simlink to `/dev/stdout`.
+By default, the Nginx image is configured to send Nginx access log and error log to the Docker log collector.
+This is done by linking them to `stdout` and `stderr`.
+It means that the `access.log` and `error.log` in the `/var/log/nginx` folder are simlinks to `/dev/stdout` and `/dev/stderr`.
 
-You can customize it using all the provided Nginx variables, for example logging any request header using `$http_<header>` and response header via `$sent_http_<header>`.
+```shell
+root@new-host:/# ls -al /var/log/nginx/
+total 8
+drwxr-xr-x 1 root root 4096 Nov 20 01:15 .
+drwxr-xr-x 1 root root 4096 Nov 20 01:15 ..
+lrwxrwxrwx 1 root root   11 Nov 20 01:15 access.log -> /dev/stdout
+lrwxrwxrwx 1 root root   11 Nov 20 01:15 error.log -> /dev/stderr
+```
+
+You can customize the logging using all the provided Nginx variables.
+For example logging any request header using `$http_<header>` and response header via `$sent_http_<header>`.
 
 Start Nginx mounting a volume for using the provided `nginx_logging.conf` file as the default one.
 
