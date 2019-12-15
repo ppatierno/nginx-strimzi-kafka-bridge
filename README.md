@@ -2,6 +2,20 @@
 
 This repository provides some examples for using [Nginx](https://www.nginx.com/) reverse proxy in front of the [Strimzi](https://strimzi.io/) [HTTP Kafka Bridge](https://github.com/strimzi/strimzi-kafka-bridge).
 
+## Logging
+
+Nginx writes information about encountered issues of different severity levels to the `error.log` file which by default it defined as a simlink to `/dev/stderr`.
+
+Nginx writes information about client requests to the `access.log` file right after the request is processed; by default it's defined a simlink to `/dev/stdout`.
+
+You can customize it using all the provided Nginx variables.
+
+Start Nginx mounting a volume for using the provided `nginx_logging.conf` file as the default one.
+
+```shell
+docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v $PWD/logging/nginx_logging.conf:/etc/nginx/nginx.conf nginx
+```
+
 ## Basic Configuration
 
 Start Nginx mounting a volume for using the provided `nginx.conf` file as the default one.
