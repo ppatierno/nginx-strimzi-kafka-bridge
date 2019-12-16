@@ -2,12 +2,20 @@
 
 This repository provides some examples for using [Nginx](https://www.nginx.com/) reverse proxy in front of the [Strimzi](https://strimzi.io/) [HTTP Kafka Bridge](https://github.com/strimzi/strimzi-kafka-bridge).
 
+## Basic Configuration
+
+Start Nginx mounting a volume for using the provided `nginx.conf` file as the default one.
+
+```shell
+docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v $PWD/basic/nginx.conf:/etc/nginx/nginx.conf nginx
+```
+
 ## Logging
 
 Nginx writes information about encountered issues of different severity levels to the `error.log` file.
 Nginx writes information about client requests to the `access.log` file right after the request is processed.
 
-By default, the Nginx image is configured to send Nginx access log and error log to the Docker log collector.
+By default, the Nginx Docker image is configured to send Nginx access log and error log to the Docker log collector.
 This is done by linking them to `stdout` and `stderr`.
 It means that the `access.log` and `error.log` in the `/var/log/nginx` folder are simlinks to `/dev/stdout` and `/dev/stderr`.
 
@@ -21,20 +29,12 @@ lrwxrwxrwx 1 root root   11 Nov 20 01:15 error.log -> /dev/stderr
 ```
 
 You can customize the logging using all the provided Nginx variables.
-For example logging any request header using `$http_<header>` and response header via `$sent_http_<header>`.
+For example, logging any request header using `$http_<header>` and response header via `$sent_http_<header>`.
 
 Start Nginx mounting a volume for using the provided `nginx_logging.conf` file as the default one.
 
 ```shell
 docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v $PWD/logging/nginx_logging.conf:/etc/nginx/nginx.conf nginx
-```
-
-## Basic Configuration
-
-Start Nginx mounting a volume for using the provided `nginx.conf` file as the default one.
-
-```shell
-docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v $PWD/basic/nginx.conf:/etc/nginx/nginx.conf nginx
 ```
 
 ## Authentication
