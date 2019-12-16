@@ -10,6 +10,14 @@ For example:
 export BASIC_AUTH="Authorization: Basic $(echo -n user1:password1 | base64)"
 ```
 
+If API Key based authentication is enabled on the Nginx proxy, export following `APIKEY_AUTH` for adding the `apikey` header in the HTTP requests.
+Use the appropriate apikey.
+For example:
+
+```shell
+export APIKEY_AUTH="apikey: qYOGjP4HstJ5jwQvWiQLw+5Y"
+```
+
 # Producer
 
 Producer records.
@@ -19,6 +27,7 @@ curl -X POST \
   http://localhost:80/topics/test \
   -H 'Content-Type: application/vnd.kafka.json.v2+json' \
   -H "${BASIC_AUTH}" \
+  -H "${APIKEY_AUTH}" \
   -d '{
 	"records": [
 		{
@@ -38,6 +47,7 @@ curl -X POST \
   http://localhost:80/consumers/my-group-1 \
   -H 'Content-Type: application/vnd.kafka.v2+json' \
   -H "${BASIC_AUTH}" \
+  -H "${APIKEY_AUTH}" \  
   -d '{
 	"name": "some-consumer",
 	"auto.offset.reset": "earliest",
@@ -55,6 +65,7 @@ curl -X POST \
   http://localhost:80/consumers/my-group-1/instances/some-consumer/subscription \
   -H 'Content-Type: application/vnd.kafka.v2+json' \
   -H "${BASIC_AUTH}" \
+  -H "${APIKEY_AUTH}" \
   -d '{ "topics" : ["test"] }'
 ```
 
@@ -64,7 +75,8 @@ curl -X POST \
 curl -X GET \
   http://localhost:80/consumers/my-group-1/instances/some-consumer/records \
   -H 'Accept: application/vnd.kafka.json.v2+json' \
-  -H "${BASIC_AUTH}"
+  -H "${BASIC_AUTH}" \
+  -H "${APIKEY_AUTH}"
 ```
 
 ## Delete consumer
@@ -72,5 +84,6 @@ curl -X GET \
 ```shell
 curl -X DELETE \
   http://localhost:80/consumers/my-group-1/instances/some-consumer \
-  -H "${BASIC_AUTH}"
+  -H "${BASIC_AUTH}" \
+  -H "${APIKEY_AUTH}"
 ```

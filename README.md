@@ -62,6 +62,23 @@ Start Nginx mounting a volume for using the provided `nginx_basic_auth.conf` fil
 docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v $PWD/authentication/nginx_basic_auth.conf:/etc/nginx/nginx.conf -v $PWD/authentication/.htpasswd:/etc/nginx/htpasswd/.htpasswd nginx
 ```
 
+## API Key
+
+You can generate API keys using following command:
+
+```shell
+openssl rand -base64 18
+```
+
+Then you can map each API key with a corresponding user.
+The `api_keys.conf` provides an example of such a mapping.
+
+Start Nginx mounting a volume for using the provided `nginx_apikey_auth.conf` file as the default one and the `api_keys.conf` file containing the API keys users mapping.
+
+```shell
+docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v $PWD/authentication/nginx_apikey_auth.conf:/etc/nginx/nginx.conf -v $PWD/authentication/api_keys.conf:/etc/nginx/api_keys.conf nginx
+```
+
 ## Limiting
 
 ### Rate Limiting
