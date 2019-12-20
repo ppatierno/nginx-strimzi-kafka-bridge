@@ -47,7 +47,7 @@ curl -X POST \
   http://localhost:80/consumers/my-group-1 \
   -H 'Content-Type: application/vnd.kafka.v2+json' \
   -H "${BASIC_AUTH}" \
-  -H "${APIKEY_AUTH}" \  
+  -H "${APIKEY_AUTH}" \
   -d '{
 	"name": "some-consumer",
 	"auto.offset.reset": "earliest",
