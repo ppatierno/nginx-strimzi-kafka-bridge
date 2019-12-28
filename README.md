@@ -113,7 +113,7 @@ docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 8443:8443 -v
 
 If there are multiple instances of the Strimzi Kafka bridge, it is possible to identifiy each of them with a name like `bridgeX` (with `X` from 1 to the number of instances, i.e. bridge1, bridge2, ...).
 
-## URI based routing
+### URI based routing
 
 Each bridge endpoint is accessible through the Nginx reverse proxy prefixing the endpoint itself with `/bridgeX` (i.e. for the producer endpoint `/topics/test` on bridge1, it becomes `/bridge1/topics/test`); the Nginx reverse proxy will be in charge of routing the request to the related bridge.
 
