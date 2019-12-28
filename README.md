@@ -124,3 +124,20 @@ docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v $PW
 ```
 
 > The provided Nginx configuration relies on two bridges running locally and listening on port 8080 and 8081 respectively.
+
+## Kubernetes deployment
+
+An `nginx.yaml` file is provided for deploying the Nginx reverse proxy on Kubernetes in front of one or more instances of the Strimzi Kafka bridge.
+It provides a `Deployment` and a related `Service`.
+The Nginx configuration file is mounted as a `ConfigMap` volume named `nginx-config` that could be created from one of the examples.
+Before doing that, the `upstream` section should be modified pointing to the correct Strimzi Kafka bridge service deployed in the same Kubernetes cluster; after that, the `ConfigMap` can be created running the following command (i.e. using the basic configuration).
+
+```shell
+kubectl create configmap nginx-config --from-file=nginx.conf=basic/nginx.conf
+```
+
+Finally, deploy Nginx on Kubernetes by running.
+
+```shell
+kubectl apply -f kubernetes/nginx.yaml
+```
