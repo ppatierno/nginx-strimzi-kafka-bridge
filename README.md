@@ -142,6 +142,8 @@ Finally, deploy Nginx on Kubernetes by running.
 kubectl apply -f kubernetes/nginx.yaml
 ```
 
+### Kubernetes Ingress
+
 This repository also provides a Kubernetes Ingress definition for exposing the Nginx reverse proxy.
 
 ```shell
@@ -149,3 +151,11 @@ kubectl apply -f kubernetes/nginx-ingress.yaml
 ```
 
 > If you are running Kubernetes using `minikube`, remember to enable the Ingress controller by running `minikube addons enable ingress`. If you are connecting from your laptop to the `minikube` instance, update the `/etc/hosts` in order to reach the host specified in the Ingress declaration mapping it to the Minikube IP address.
+
+### OpenShift Route
+
+This repository also provides a OpenShift Route definition for exposing the Nginx reverse proxy.
+
+```shell
+kubectl apply -f kubernetes/nginx-route.yaml
+```
