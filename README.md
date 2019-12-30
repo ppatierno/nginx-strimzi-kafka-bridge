@@ -142,6 +142,8 @@ Finally, deploy Nginx on Kubernetes by running.
 kubectl apply -f kubernetes/nginx.yaml
 ```
 
+> if you are deploying on OpenShift (3.x) you could get a "permission denied" in Nginx during its starting process. You can get more information about how to fix it [here](https://access.redhat.com/solutions/3419001).
+
 ### Kubernetes Ingress
 
 This repository also provides a Kubernetes Ingress definition for exposing the Nginx reverse proxy.
