@@ -159,5 +159,7 @@ kubectl apply -f kubernetes/nginx-ingress.yaml
 This repository also provides a OpenShift Route definition for exposing the Nginx reverse proxy.
 
 ```shell
-kubectl apply -f kubernetes/nginx-route.yaml
+oc apply -f kubernetes/nginx-route.yaml
 ```
+
+> If you are running OpenShift using `minishift`, the provided route will have an assigned URL using [nip.io](https://nip.io/) so it will be something like `http://nginx-route-myproject.192.168.42.23.nip.io/` which will be reachable directly from your laptop without any further change.
