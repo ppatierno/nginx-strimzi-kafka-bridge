@@ -90,7 +90,7 @@ docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v $PW
 ```
 
 In this configuration, the proxy limits the incoming requests as maximum 1 request/sec.
-If it is exceeded, the proxy return error `503 Service Unavailable`.
+If it is exceeded, the proxy returns error `503 Service Unavailable`.
 
 It is possible to have the proxy accepting a `burst` of requests but processing them at fixed rate (defined by the rate limiting).
 When the burst is exceeded, the proxy returns an error.
@@ -101,7 +101,9 @@ docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v $PW
 
 ## Encryption
 
-Start Nginx mounting a volume for using the provided `nginx_encryption` file as the default one.
+Before enabling encryption you have to generate certificate (seldf signed or signed by a CA) and key for the proxy using tools like `openssl` for example.
+
+Start Nginx mounting a volume for using the provided `nginx_encryption` file as the default one and other volumes for the proxy certificate `nginx.pem` and private key `nginx.key`.
 
 ```shell
 docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 8443:8443 -v $PWD/encryption/nginx_encryption.conf:/etc/nginx/nginx.conf -v $PWD/encryption/nginx.pem:/etc/nginx/certs/nginx.pem -v $PWD/encryption/nginx.key:/etc/nginx/certs/nginx.key nginx
@@ -130,7 +132,7 @@ docker run -it --rm --net=host --name nginx-strimzi-kafka-bridge -p 80:80 -v $PW
 An `nginx.yaml` file is provided for deploying the Nginx reverse proxy on Kubernetes in front of one or more instances of the Strimzi Kafka bridge.
 It provides a `Deployment` and a related `Service`.
 The Nginx configuration file is mounted as a `ConfigMap` volume named `nginx-config` that could be created from one of the examples.
-Before doing that, the `upstream` section should be modified pointing to the correct Strimzi Kafka bridge service deployed in the same Kubernetes cluster; after that, the `ConfigMap` can be created running the following command (i.e. using the basic configuration).
+Before doing that, the `upstream` section should be modified pointing to the correct Strimzi Kafka bridge Service deployed in the same Kubernetes cluster; after that, the `ConfigMap` can be created running the following command (i.e. using the basic configuration).
 
 ```shell
 kubectl create configmap nginx-config --from-file=nginx.conf=basic/nginx.conf
@@ -142,11 +144,11 @@ Finally, deploy Nginx on Kubernetes by running.
 kubectl apply -f kubernetes/nginx.yaml
 ```
 
-> if you are deploying on OpenShift (3.x) you could get a "permission denied" in Nginx during its starting process. You can get more information about how to fix it [here](https://access.redhat.com/solutions/3419001).
+> if you are deploying on OpenShift (3.x) you could get a "permission denied" error in Nginx during its starting process. You can get more information about how to fix it [here](https://access.redhat.com/solutions/3419001).
 
 ### Kubernetes Ingress
 
-This repository also provides a Kubernetes Ingress definition for exposing the Nginx reverse proxy.
+This repository also provides a Kubernetes Ingress definition for exposing the Nginx reverse proxy outside of the cluster. 
 
 ```shell
 kubectl apply -f kubernetes/nginx-ingress.yaml
@@ -156,7 +158,7 @@ kubectl apply -f kubernetes/nginx-ingress.yaml
 
 ### OpenShift Route
 
-This repository also provides a OpenShift Route definition for exposing the Nginx reverse proxy.
+This repository also provides a OpenShift Route definition for exposing the Nginx reverse proxy outside of the cluster. 
 
 ```shell
 oc apply -f kubernetes/nginx-route.yaml
